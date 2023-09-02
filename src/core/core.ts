@@ -1,4 +1,4 @@
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 // import * as pdfkit from 'pdfkit';
 
 function urlB64ToUint8Array(base64String: string) {
@@ -20,7 +20,7 @@ export function BaseConverterStack(data: any) {
   return ia;
 }
 
-export function pdfToBlob(data: Uint8Array, filename: string) {
+export function pdfToBlob(data: Uint8Array) {
   // Blob for saving.
   var blob = new Blob([data], { type: "application/pdf" });
   return blob;

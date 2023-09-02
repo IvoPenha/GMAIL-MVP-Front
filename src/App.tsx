@@ -44,9 +44,7 @@ function App() {
     setDecodedMails(decodedMails);
   }, [mails]);
 
-  function openBlobInViewPDF(fileItem: Blob) {
-    PDFViewer({ fileItem });
-  }
+  
   const [currenntFile, setCurrentFile] = useState<Blob | null>(null);
   return (
     <>
@@ -62,7 +60,7 @@ function App() {
               onClick={() => {
                 const myDecodedAttachment = mydecodedMails[index]?.attachment;
                 if (myDecodedAttachment !== undefined) {
-                  setCurrentFile(pdfToBlob(myDecodedAttachment, mail.fileName));
+                  setCurrentFile(pdfToBlob(myDecodedAttachment));
                   openModal();
                 }
               }}
