@@ -50,7 +50,6 @@ function App() {
     setToken(localStorage.getItem("token") || "");
   }, []);
   useEffect(() => {
-    if(token === "") return;
     async function getMails() {
       const mails = await getReadMails("ivoxps@gmail.com", 'token will come here');
       setMails(mails);
