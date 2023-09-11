@@ -45,10 +45,10 @@ function App() {
   const [currenntFile, setCurrentFile] = useState<Blob | null>(null);
   const [currentFileName, setCurrentFileName] = useState<string>("");
   const [isCurrentLoading, setIsCurrentLoading] = useState(true);
-  const [token, setToken] = useState<string>("");
-  useEffect(() => {
-    setToken(localStorage.getItem("token") || "");
-  }, []);
+  // const [token, setToken] = useState<string>("");
+  // useEffect(() => {
+    // setToken(localStorage.getItem("token") || "");
+  // }, []);
   useEffect(() => {
     async function getMails() {
       const mails = await getReadMails("ivoxps@gmail.com", 'token will come here');
