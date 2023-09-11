@@ -1,56 +1,34 @@
-import ReactModal from 'react-modal'
-import { AiOutlineCloseCircle  } from 'react-icons/ai'
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+
 
 interface Props {
   isOpen: boolean;
   OnClose: () => void
   children: React.ReactNode
+  Title: string
 }
 
-export const Modal = ({
+const CustomModal = ({
   isOpen,
   OnClose,
-  children
+  children,
+  Title
 } : Props) => {
   return (
-    <ReactModal isOpen={isOpen}
-      style={{
-        overlay: {
-          backgroundColor: 'rgba(0,0,0,0.5)'
-        },
-        content: {
-          position: 'absolute',
-          top: '40px',
-          left: '40px',
-          right: '40px',
-          bottom: '40px',          
-          background: '#ececec',
-          overflow: 'auto',
-          WebkitOverflowScrolling: 'touch',
-          borderRadius: '4px',
-          outline: 'none',
-          padding: '20px',
-        }
-      }}
-      
-      onRequestClose={() => OnClose()}
-    >
-      <button onClick={OnClose} style={
-        {
-          position: 'absolute',
-          top: 20,
-          right: 20,
-          color: 'red',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: '40px',
-          fontWeight: 'bold',
-          padding: 0,
-
-        }
-      } > <AiOutlineCloseCircle />  </button>
-      {children}
-    </ReactModal>
+    <Modal onClose={OnClose} size={'6xl'} isOpen={isOpen}>
+    <ModalOverlay />
+    <ModalContent overflowY={'scroll'} maxHeight={'85%'}>
+      { Title && <ModalHeader>{Title}</ModalHeader>}
+      <ModalCloseButton zIndex={3000} />
+      <ModalBody>
+        {children}
+      </ModalBody>
+      <ModalFooter>
+        <Button onClick={OnClose}>Fechar</Button>
+      </ModalFooter>
+    </ModalContent>
+  </Modal>
   )
 }
+
+export default CustomModal
