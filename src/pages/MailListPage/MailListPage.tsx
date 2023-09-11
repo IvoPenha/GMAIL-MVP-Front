@@ -52,11 +52,12 @@ function App() {
   useEffect(() => {
     if(token === "") return;
     async function getMails() {
-      const mails = await getReadMails("ivoxps@gmail.com", token);
+      const mails = await getReadMails("ivoxps@gmail.com", 'token will come here');
       setMails(mails);
     }
     getMails();
-  }, [token]);
+  }, []);
+  //put token up here
   useEffect(() => {
     const decodedMails = mails.map((mail: Mail | null) => {
       return mail == null || !mail.fileName.endsWith(".pdf")
