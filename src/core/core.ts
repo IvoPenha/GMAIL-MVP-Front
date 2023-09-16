@@ -1,3 +1,4 @@
+import { saveAs } from 'file-saver';
 // import { saveAs } from "file-saver";
 // import * as pdfkit from 'pdfkit';
 
@@ -25,8 +26,10 @@ export function pdfToBlob(data: Uint8Array) {
   var blob = new Blob([data], { type: "application/pdf" });
   return blob;
 
-  // Tell the browser to save as report.pdf.
-  // saveAs(blob, filename);
+}
+
+export function downloadBlob(blob: Blob, fileName: string) {
+  saveAs(blob, fileName);
 }
 
 export class Base64Converter {

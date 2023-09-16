@@ -5,6 +5,8 @@ import './index.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import Routes  from './routes/router.tsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import { AuthProvider } from './contexts/auth-context.tsx'
+import { getCurrentAccount } from './core/cache/current-account.ts'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,7 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         onScriptLoadSuccess={() => {console.log('deu certo ó')}}
         onScriptLoadError={() => console.log('deu ruim')}
       >
-        <Routes/>
+        <AuthProvider
+          getCurrentAccount={getCurrentAccount}
+        >
+          <Routes/>
+        </AuthProvider>
       </GoogleOAuthProvider>
     </ChakraProvider>
   </React.StrictMode>,

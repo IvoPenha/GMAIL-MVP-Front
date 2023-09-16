@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import "./MailList.css";
 import { getReadMails } from "../../services/service";
-import { BaseConverterStack, pdfToBlob } from "../../core/core";
+import { BaseConverterStack, downloadBlob, pdfToBlob } from "../../core/core";
 import { PiFilePdfDuotone, PiDownloadSimpleLight } from "react-icons/pi";
 import PDFViewer from "../../core/PDFViewer/PdfViewer";
 import Modal from "../../shared/components/modal/modal";
 import Loading from "../../shared/components/Loading/Loading";
+import { Button } from '@chakra-ui/react';
+import { useAuth } from '../../hooks';
+import { CommonUsuarioClaims } from '../../types/CommonUsuario';
+import { Cache } from '../../core';
 type Mail = {
   SentBy: string;
   fileName: string;
@@ -45,13 +49,16 @@ function App() {
   const [currenntFile, setCurrentFile] = useState<Blob | null>(null);
   const [currentFileName, setCurrentFileName] = useState<string>("");
   const [isCurrentLoading, setIsCurrentLoading] = useState(true);
-  // const [token, setToken] = useState<string>("");
-  // useEffect(() => {
-    // setToken(localStorage.getItem("token") || "");
-  // }, []);
+
+  const { getCurrentAccount } = useAuth()
+
   useEffect(() => {
+    const currentAccount = getCurrentAccount<CommonUsuarioClaims>();
+    console.log(currentAccount)
+    const token = Cache.get({key:'token'})
+    console.log(token)
     async function getMails() {
-      const mails = await getReadMails("ivoxps@gmail.com", 'token will come here');
+      const mails = await getReadMails('me', token);
       setMails(mails);
     }
     getMails();
@@ -115,7 +122,11 @@ function App() {
           OnClose={closeModal}
           Title={"Visualizando " + currentFileName}
         >
-          {currenntFile && <PDFViewer fileItem={currenntFile} />}
+          {currenntFile && <>
+          <p>Clique aqui para baixar <Button onClick={() => downloadBlob(currenntFile, currentFileName)} /> </p>
+          <PDFViewer fileItem={currenntFile} />
+          </>
+          }
         </Modal>
       </div>
     </>
