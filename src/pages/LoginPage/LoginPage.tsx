@@ -22,7 +22,7 @@ const LoginPage = () => {
       })
     }
     if(user.access_token){
-      user.expires_in = new Date().getTime() + 3600 
+      user.expires_in = new Date().getTime() + 3600000 
       const userToken = Cryptography.encodeToken(user)
       saveAccessToken(userToken)
       navigate('/')

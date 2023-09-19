@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import "./MailList.css";
 import { getReadMails } from "../../services/service";
 import { BaseConverterStack, downloadBlob, pdfToBlob } from "../../core/core";
-import { PiFilePdfDuotone, PiDownloadSimpleLight } from "react-icons/pi";
+import { PiDownloadFill } from "react-icons/pi";
 import PDFViewer from "../../core/PDFViewer/PdfViewer";
 import Modal from "../../shared/components/modal/modal";
 import Loading from "../../shared/components/Loading/Loading";
 import { Button } from '@chakra-ui/react';
-import { useAuth } from '../../hooks';
-import { CommonUsuarioClaims } from '../../types/CommonUsuario';
 import { Cache } from '../../core';
+import { MonthInput } from '../components/monthInput';
 type Mail = {
   SentBy: string;
   fileName: string;
@@ -50,15 +49,14 @@ function App() {
   const [currentFileName, setCurrentFileName] = useState<string>("");
   const [isCurrentLoading, setIsCurrentLoading] = useState(true);
 
-  const { getCurrentAccount } = useAuth()
+  // const { getCurrentAccount } = useAuth()
 
   useEffect(() => {
-    const currentAccount = getCurrentAccount<CommonUsuarioClaims>();
-    console.log(currentAccount)
+    // const currentAccount = getCurrentAccount<CommonUsuarioClaims>();
     const token = Cache.get({key:'token'})
-    console.log(token)
     async function getMails() {
       const mails = await getReadMails('me', token);
+      console.log(mails)
       setMails(mails);
     }
     getMails();
@@ -76,10 +74,12 @@ function App() {
 
   return (
     <>
+      <MonthInput/>
       <div className="wrapper">
         {isCurrentLoading ? (
           <Loading></Loading>
         ) : (
+          <>{
           mails.map((mail: Mail | null, index) =>
             mail == null || !mail.fileName.endsWith(".pdf") ? (
               <div key={index}></div>
@@ -99,10 +99,10 @@ function App() {
               >
                 <strong>{mail.SentBy}</strong>
                 <p>
-                  {mail.fileName} <PiFilePdfDuotone /> <PiDownloadSimpleLight />
+                  {mail.fileName}
                 </p>
                 <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', padding: '6px', width:'full', maxWidth: '100%'  } }>
-                    Numero do Boleto: {mail.attachment.codigoInput}
+                    Linha digitável: {mail.attachment.linhaDigitavel}
                 </div>
                 <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', marginTop: '10px', padding: '6px', width:'full', maxWidth: '100%'  } }>
                     Valor do Boleto R$: {mail.attachment.valor}
@@ -111,9 +111,20 @@ function App() {
                 <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', marginTop: '10px', padding: '6px', width:'full', maxWidth: '100%'  } }>
                     Vencimento do boleto: {new Date(mail.attachment.vencimento).toLocaleDateString('pt-br')}
                 </div>
+
+                {
+                  mail.attachment.sucesso === false && (
+                    <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', marginTop: '10px', padding: '6px', width:'full', maxWidth: '100%'  } }>
+                      <p> <strong>Erro ao ler boleto: </strong> {mail.attachment.mensagem}</p>
+                    </div>
+                  )
+                }
+
+
               </div>
             )
           )
+          }</>
         )}
       </div>
       <div>
@@ -123,7 +134,7 @@ function App() {
           Title={"Visualizando " + currentFileName}
         >
           {currenntFile && <>
-          <p>Clique aqui para baixar <Button onClick={() => downloadBlob(currenntFile, currentFileName)} /> </p>
+          <p>Clique aqui para baixar <Button onClick={() => downloadBlob(currenntFile, currentFileName)}><PiDownloadFill/></Button> </p>
           <PDFViewer fileItem={currenntFile} />
           </>
           }
