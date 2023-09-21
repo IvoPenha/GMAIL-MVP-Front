@@ -1,59 +1,70 @@
-import { Select } from '@chakra-ui/react';
-import { FormEvent, useState } from 'react';
+// import MonthPickerInput from "react-month-picker-input";
+// import React, {
+//   ChangeEventHandler,
+//   FormEvent,
+//   useEffect,
+//   useState,
+// } from "react";
+// import { Input } from "@chakra-ui/react";
 
-function getFirstAndLastDayOfYearMonths(month : number ) {
-  // Validação do mês (deve estar entre 1 e 12)
-  if (month < 1 || month > 12) {
-    return "Mês inválido. Forneça um mês entre 1 e 12.";
-  }
+// function getFirstAndLastDayOfYearMonths(
+//   month: number
+// ): { firstDayOfPreviousMonth: string; lastDayOfNextMonth: string } | null {
+//   // Validação do mês (deve estar entre 1 e 12)
+//   if (month < 1 || month > 12) {
+//     console.error("Mês inválido. Forneça um mês entre 1 e 12.");
+//     return null;
+//   }
 
-  // Obtém o ano atual
-  const currentYear = new Date().getFullYear();
+//   // Obtém o ano atual
+//   const currentYear = new Date().getFullYear();
 
-  // Calcula o primeiro dia do mês anterior
-  const firstDayOfPreviousMonth = new Date(currentYear, month -1, 1).toLocaleDateString('pt-br');
-  
+//   // Calcula o primeiro dia do mês anterior
+//   const firstDayOfPreviousMonth = new Date(
+//     currentYear,
+//     month - 1,
+//     1
+//   ).toLocaleDateString("pt-br");
 
-  // Calcula o último dia do mês seguinte
-  const lastDayOfNextMonth = new Date(currentYear, month, 0).toLocaleDateString('pt-br');
+//   // Calcula o último dia do mês seguinte
+//   const lastDayOfNextMonth = new Date(currentYear, month, 0).toLocaleDateString(
+//     "pt-br"
+//   );
 
-  return {
-    firstDayOfPreviousMonth,
-    lastDayOfNextMonth,
-  };
-}
+//   return {
+//     firstDayOfPreviousMonth,
+//     lastDayOfNextMonth,
+//   };
+// }
+// function getDateToYYYYMM(date: Date) {
+//   return `${date.getFullYear()}-${
+//     date.getMonth()+1 > 9 ? date.getMonth()+1 : `0${date.getMonth()}`
+//   }`;
+// }
 
-enum Months {
-  Janeiro = 1,
-  Fevereiro = 2,
-  Março = 3,
-  Abril = 4,
-  Maio = 5,
-  Junho = 6,
-  Julho = 7,
-  Agosto = 8,
-  Setembro = 9,
-  Outubro = 10,
-  Novembro = 11,
-  Dezembro = 12,
-}
+// function getMonthfromYYYYMMstring(dateValue: string) {
+//   const date = new Date(dateValue);
+//   console.log(date, date.getMonth())
+//   return date.getMonth()+2;
+// }
 
-export function MonthInput() {
-  const [selectedMonth, setSelectedMonth] = useState(Months.Janeiro);
 
-  const handleMonthChange = (event: any) => {
-    setSelectedMonth(Number(event.target.value));
-  };
-  return (
-    <div>
-    <Select value={selectedMonth} onChange={handleMonthChange}>
-      {Object.entries(Months).map(([monthName, monthValue]) => (
-        <option key={monthValue} value={monthValue}>
-          {monthName}
-        </option>
-      ))}
-    </Select>
-    <p>Selected Month: {selectedMonth}</p>
-  </div>
-  );
-}
+// export function MonthInput() {
+//   const [selectedMonth, setSelectedMonth] = useState(
+//     getDateToYYYYMM(new Date())
+//     );
+    
+//     const handleMonthChange = (
+//       event: React.ChangeEvent<HTMLInputElement>
+//       ): void => {
+//         setSelectedMonth(event.target.value);
+//       };
+//       const IntervalBetweenMonths = `${getFirstAndLastDayOfYearMonths(getMonthfromYYYYMMstring(selectedMonth))?.firstDayOfPreviousMonth} - ${getFirstAndLastDayOfYearMonths(getMonthfromYYYYMMstring(selectedMonth))?.lastDayOfNextMonth}`;
+//   return (
+//     <>
+//     <Input type="month" value={selectedMonth} onChange={handleMonthChange} width={'200px'} />
+//     {IntervalBetweenMonths}
+//     </>
+//     // <h1>oi</h1>
+//   );
+// }
