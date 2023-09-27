@@ -15,7 +15,7 @@ type Mail = {
   emailDate: string;
   messageId: string;
   subject?: string;
-  attachment: {
+  boleto: {
     sucesso: boolean;
     codigoInput: string;
     mensagem: string;
@@ -66,7 +66,7 @@ function App() {
     const decodedMails = mails.map((mail: Mail | null) => {
       return mail == null || !mail.fileName.endsWith(".pdf")
         ? null
-        : { ...mail, attachment: BaseConverterStack(mail.attachment.base64) };
+        : { ...mail, attachment: BaseConverterStack(mail.boleto.base64) };
     });
     setDecodedMails(decodedMails);
     mails.length > 0 && setIsCurrentLoading(false);
@@ -102,20 +102,20 @@ function App() {
                   {mail.fileName}
                 </p>
                 <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', padding: '6px', width:'full', maxWidth: '100%'  } }>
-                    Linha digitável: {mail.attachment.linhaDigitavel}
+                    Linha digitável: {mail.boleto.linhaDigitavel}
                 </div>
                 <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', marginTop: '10px', padding: '6px', width:'full', maxWidth: '100%'  } }>
-                    Valor do Boleto R$: {mail.attachment.valor}
+                    Valor do Boleto R$: {mail.boleto.valor}
                 </div>
                 
                 <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', marginTop: '10px', padding: '6px', width:'full', maxWidth: '100%'  } }>
-                    Vencimento do boleto: {new Date(mail.attachment.vencimento).toLocaleDateString('pt-br')}
+                    Vencimento do boleto: {new Date(mail.boleto.vencimento).toLocaleDateString('pt-br')}
                 </div>
 
                 {
-                  mail.attachment.sucesso === false && (
+                  mail.boleto.sucesso === false && (
                     <div style={{ background: '#ddd', color:'#111', borderRadius:'8px', marginTop: '10px', padding: '6px', width:'full', maxWidth: '100%'  } }>
-                      <p> <strong>Erro ao ler boleto: </strong> {mail.attachment.mensagem}</p>
+                      <p> <strong>Erro ao ler boleto: </strong> {mail.boleto.mensagem}</p>
                     </div>
                   )
                 }
