@@ -1,40 +1,32 @@
-import { Box, Button } from '@chakra-ui/react';
-import { PiGoogleLogoDuotone } from 'react-icons/pi';
-import { auth, googleProvider } from '../../firebase-settings'
-import { signInWithPopup, UserCredential  } from 'firebase/auth'
-import { logar } from '../../services/login';
-import { Cache, Cryptography } from '../../core';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import { useAuth } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
+import { LoginForm } from './LoginForm';
+import { AnimatedLogo } from '../../shared/components/Logo/animated';
 
 const LoginPage = () => {
-  const { saveAccessToken} = useAuth()
-  const navigate = useNavigate()
-  const signInWithGoogle = async () => {
-    try {
-    const response = await signInWithPopup(auth ,googleProvider) as any
-    if(response.user){
-      const apiLogarResponse = await logar(response._tokenResponse.oauthAccessToken)
-      apiLogarResponse.expires_in = new Date().getTime() + 3600000 
-      const userToken = Cryptography.encodeToken(apiLogarResponse)
-      saveAccessToken(userToken)
-      navigate('/')
-      Cache.set({
-        key: 'token',
-        value: apiLogarResponse.token
-      })
-      console.log(response.user.stsTokenManager.refreshToken)
-    }
-    } catch (err){
-      console.error(err);
-    }
-  };
-
   return (
-    <Box display={'flex'} textAlign={'center'} background={'peru'} gap={32} width={'container.xl'} height={'container.md'} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
-      <h1>DocPost Prova de conceito</h1>
-      <Button onClick={() => signInWithGoogle()} > <PiGoogleLogoDuotone/> Login Com Google</Button>
-      
+    <Box display={'flex'} textAlign={'center'} gap={10} background={'primary'} width={'full'} height={'full'} justifyContent={'start'} alignItems={'center'} flexDirection={'column'}>
+      {/* <Image src={'/logo.png'} alt={'Nome'} marginTop={'5%'} /> */}
+      <AnimatedLogo />
+      <Box display={'flex'} gap={{ lg: 3, base: 6 }} bgColor={'surface'} width={{ lg: 'container.sm', base: 'full' }} height={{ lg: 'initial', base: 'full' }} paddingX={'3rem'} paddingY={'3%'} borderRadius={8} alignItems={'center'} flexDirection={'column'} >
+        <Text alignSelf={'start'} textAlign={'start'} >Gerencie seus pagamentos com facilidade e segurança. </Text>
+        <Flex flexDirection={'column'} width={'full'} gap={3} >
+          <Text textAlign={'start'} alignSelf={'start'} >Faça login para começar </Text>
+          <LoginForm />
+        </Flex>
+      </Box>
+      {/* <Button
+        leftIcon={<PiGoogleLogoDuotone />}
+        onClick={signInWithGoogle}
+        colorScheme={'blue'}
+        variant={'outline'}
+        size={'lg'}
+      >
+        Entrar com Google
+      </Button> */}
+
+
     </Box>
   );
 
