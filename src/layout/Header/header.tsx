@@ -1,17 +1,9 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   useDisclosure,
-  useColorModeValue,
   Stack,
   Text,
   Image,
@@ -21,35 +13,8 @@ import {
   AiOutlineCloseCircle as CloseIcon,
   AiOutlineMenuFold as HamburgerIcon,
 } from "react-icons/ai";
-import { GiSittingDog } from "react-icons/gi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
-
-interface Props {
-  children: React.ReactNode;
-}
-
-const Links = ["Conheça o Criador"];
-
-const NavLink = (props: Props) => {
-  const { children } = props;
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
-      }}
-      target="_blank"
-      href={"https://github.com/IvoPenha"}
-    >
-      {children}
-    </Box>
-  );
-};
 
 export function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();

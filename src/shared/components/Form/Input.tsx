@@ -1,4 +1,4 @@
-import { Input as ChakraInput, InputProps as ChakraInputProps, FormControl, FormErrorMessage, FormLabel, Icon, InputGroup, InputLeftElement, InputRightElement } from "@chakra-ui/react";
+import { Input as ChakraInput, InputProps as ChakraInputProps, FormControl, FormErrorMessage, Icon, InputGroup, InputLeftElement, InputRightElement } from "@chakra-ui/react";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { FieldError } from "react-hook-form";
 import { IconType } from "react-icons";

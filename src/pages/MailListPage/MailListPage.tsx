@@ -4,7 +4,7 @@ import { BaseConverterStack, downloadBlob, pdfToBlob } from "../../core/core";
 import PDFViewer from "../../core/PDFViewer/PdfViewer";
 import Modal from "../../shared/components/modal/modal";
 import Loading from "../../shared/components/Loading/Loading";
-import { Avatar, Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { Boleto } from "../../types";
 // import { MonthInput } from '../components/monthInput';
 import { AiFillCloseCircle } from "react-icons/ai";

@@ -1,6 +1,5 @@
 import { Button } from '@chakra-ui/react'
 import { useGoogleLogin } from '@react-oauth/google';
-import { signInWithPopup } from 'firebase/auth';
 import { FaGoogle } from 'react-icons/fa'
 
 

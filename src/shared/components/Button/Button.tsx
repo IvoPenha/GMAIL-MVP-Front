@@ -1,10 +1,5 @@
 import { ButtonProps, Button as ChakraButton } from '@chakra-ui/react';
 
-interface CustomButtonProps extends ButtonProps {
-  children: React.ReactNode
-  variant: 'primary' | 'secondary' | 'error'
-}
-
 function CustomChakraUiButton(props: ButtonProps) {
   return <ChakraButton
     variant={props.variant === 'primary' ? 'outline' : 'filled'}

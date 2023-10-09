@@ -1,6 +1,4 @@
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import { useAuth } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { LoginForm } from './LoginForm';
 import { AnimatedLogo } from '../../shared/components/Logo/animated';
 
