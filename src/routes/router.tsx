@@ -16,7 +16,7 @@ const AppRoutes = () => {
         >
         </Route>
         <Route path='/' element={<ProtectedRoute component={MainLayout} />}>
-          <Route path="/boletos" element={<ProtectedRoute component={MailListPage} />} />
+          <Route path="/" element={<ProtectedRoute component={MailListPage} />} />
           <Route path='/settings' element={<ProtectedRoute component={SettingsPage} />} />
         </Route>
       </Routes>
