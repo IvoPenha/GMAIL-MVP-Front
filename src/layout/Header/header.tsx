@@ -2,24 +2,24 @@ import {
   Box,
   Flex,
   HStack,
-  IconButton,
-  useDisclosure,
+  // IconButton,
+  // useDisclosure,
   Stack,
   Text,
   Image,
   Icon,
 } from "@chakra-ui/react";
-import {
-  AiOutlineCloseCircle as CloseIcon,
-  AiOutlineMenuFold as HamburgerIcon,
-} from "react-icons/ai";
+// import {
+//   AiOutlineCloseCircle as CloseIcon,
+//   AiOutlineMenuFold as HamburgerIcon,
+// } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
 
 export function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  const navigateHome = () => navigate("/boletos");
+  const navigateHome = () => navigate("/");
   return (
     <>
       <Box bg={"primary"} px={{ md: "10rem", base: '1rem' }}>
@@ -29,13 +29,13 @@ export function Header() {
           justifyContent={"space-between"}
           zIndex={3}
         >
-          <IconButton
+          {/* <IconButton
             fontSize={25}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={"Open Menu"}
             display={{ md: "none", base: "flex" }}
             onClick={isOpen ? onClose : onOpen}
-          />
+          /> */}
           <HStack spacing={8} alignItems={"center"}>
             <Box
               fontSize={25}

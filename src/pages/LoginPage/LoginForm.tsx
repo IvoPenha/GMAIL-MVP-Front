@@ -48,6 +48,6 @@ export function LoginForm() {
 
   // Renderize o GenericForm com os valores padrão e a função de submissão específica
   return (
-    <GenericForm values={values} onSubmit={onSubmit} validationSchema={validationSchema} />
+    <GenericForm values={values} onSubmit={onSubmit} validationSchema={validationSchema} ButtonText='Entrar' />
   );
 }

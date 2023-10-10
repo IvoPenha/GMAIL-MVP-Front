@@ -1,6 +1,9 @@
 import { TokenResponse } from '@react-oauth/google'
 
 export interface CommonUsuarioClaims extends TokenResponse{
-  exp: number
+  id: number
+  expires_in: number
+  nome: string
+  iat: number
   email: string
 }

@@ -1,15 +1,17 @@
-import { forwardRef, ForwardRefRenderFunction } from "react";
+import { forwardRef, ForwardRefRenderFunction, useState } from "react";
 import {
   DefaultValues,
   FieldError,
   FieldValues,
   useForm,
 } from "react-hook-form";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { Input } from "./Input";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IconType } from 'react-icons';
+import { Button } from '..';
+
 
 interface FormProps<T extends FieldValues> {
   values: T & {
@@ -23,10 +25,11 @@ interface FormProps<T extends FieldValues> {
   };
   onSubmit: (data: T) => Promise<void>;
   validationSchema?: yup.ObjectSchema<any>;
+  ButtonText: string;
 }
 
 const GenericForm: ForwardRefRenderFunction<any, FormProps<any>> = (
-  { values, onSubmit, validationSchema },
+  { values, onSubmit, validationSchema, ButtonText },
   ref
 ) => {
   const {
@@ -37,6 +40,7 @@ const GenericForm: ForwardRefRenderFunction<any, FormProps<any>> = (
     defaultValues: values.defaultValues as DefaultValues<any>,
     resolver: validationSchema ? yupResolver(validationSchema) : undefined,
   });
+  const [isLoading, setIsLoading] = useState(false)
 
   function isRequiredField(key: string) {
     const field = validationSchema?.fields[key] as
@@ -50,11 +54,19 @@ const GenericForm: ForwardRefRenderFunction<any, FormProps<any>> = (
     return !field.spec.optional;
   }
 
+  const submit = async (data: any) => {
+    setIsLoading(true)
+    await onSubmit(data)
+    setIsLoading(false)
+  };
+
   return (
     <Box
       width={'calc(100%)'}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(submit)}
+
+      >
         <Box display="flex" flexDirection="column" gap={3} ref={ref}>
           {Object.keys(values).map((key) => {
             const value = values[key];
@@ -73,8 +85,12 @@ const GenericForm: ForwardRefRenderFunction<any, FormProps<any>> = (
               />
             );
           })}
-          <Button type="submit">
-            Submit
+          <Button type="submit"
+            isLoading={isLoading}
+          >
+            {
+              ButtonText
+            }
           </Button>
         </Box>
       </form>
