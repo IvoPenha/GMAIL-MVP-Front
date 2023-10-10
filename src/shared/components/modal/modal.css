@@ -1,3 +1,4 @@
 .chakra-modal__content-container{
-  overflow-y: hidden;
+  overflow-y: hidden !important;
 }
+
