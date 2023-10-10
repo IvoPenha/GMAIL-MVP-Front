@@ -109,7 +109,7 @@ export const BoletoModalContent: React.FC<Props> = ({
             DOWNLOAD
           </CustomChakraUiButton>
           <CustomChakraUiButton
-            variant={"filled"}
+            variant={"primary"}
             onClick={() => {
               if (!codigoBarras) return
 

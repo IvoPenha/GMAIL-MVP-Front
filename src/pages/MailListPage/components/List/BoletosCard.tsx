@@ -29,6 +29,7 @@ export const BoletoCard: React.FC<Props> = ({
           openModal();
         }
       }}
+      cursor={"pointer"}
       width={{ md: '21rem', base: 'full' }}
       bg="white"
       boxShadow={"2xl"}
