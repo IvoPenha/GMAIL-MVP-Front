@@ -92,7 +92,7 @@ export const BoletoModalContent: React.FC<Props> = ({
             {codigoBarras}
           </Text>
         </Flex>
-        <Flex gap={{ base: '1rem', md: '2rem' }}
+        <Flex gap={{ base: '1rem', md: '2rem' }} marginTop={3}
           flexDirection={{ base: 'column', md: 'row' }}
         >
           <CustomChakraUiButton
