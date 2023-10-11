@@ -1,5 +1,4 @@
 import { ButtonProps as ChakraButtonProps, Button as ChakraButton } from '@chakra-ui/react';
-import './Button.css'
 import { DotLoading } from '..';
 
 interface ButtonProps extends ChakraButtonProps {

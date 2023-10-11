@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal, CircularLoading, CardListSkeleton } from "../../shared/";
+import { Modal, CardListSkeleton } from "../../shared/";
 import { Box, Text } from "@chakra-ui/react";
 import { Boleto, CommonUsuarioClaims } from "../../types";
 import { getBoletos } from '../../services/';
