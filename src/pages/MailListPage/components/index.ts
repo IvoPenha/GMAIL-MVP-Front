@@ -1,2 +1,2 @@
 export * from './BoletoModal/BoletoModal'
-export * from './List/BoletosCard'
+export * from './List/Card/BoletosCard'

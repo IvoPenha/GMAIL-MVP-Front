@@ -1,5 +1,10 @@
-import { ButtonProps, Button as ChakraButton } from '@chakra-ui/react';
+import { ButtonProps as ChakraButtonProps, Button as ChakraButton } from '@chakra-ui/react';
 import './Button.css'
+import { DotLoading } from '..';
+
+interface ButtonProps extends ChakraButtonProps {
+  variant?: 'primary' | 'error' | 'filled'
+}
 
 function CustomChakraUiButton(props: ButtonProps) {
   return <ChakraButton
@@ -31,7 +36,7 @@ function CustomChakraUiButton(props: ButtonProps) {
     isLoading={false}
     colorScheme="blue"
   >
-    {props.isLoading ? <><div className={props.variant === 'primary' ? 'dot-typing-primary' : props.variant === 'error' ? 'dot-typing-error' : 'dot-typing-filled'}></div></> : props.children}
+    {props.isLoading ? <DotLoading variant={props.variant} /> : props.children}
   </ChakraButton>
 }
 

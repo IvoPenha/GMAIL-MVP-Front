@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal, CircularLoading } from "../../shared/";
+import { Modal, CircularLoading, CardListSkeleton } from "../../shared/";
 import { Box, Text } from "@chakra-ui/react";
 import { Boleto, CommonUsuarioClaims } from "../../types";
 import { getBoletos } from '../../services/';
@@ -16,14 +16,13 @@ function App() {
   const [currentFileName, setCurrentFileName] = useState<string>("");
   const [isCurrentLoading, setIsCurrentLoading] = useState(true);
   const [boletos, setBoletos] = useState<Boleto[]>([]);
+  const [currentAccount, setCurrentAccount] = useState<CommonUsuarioClaims | undefined>();
 
   const { getCurrentAccount } = useAuth()
 
   useEffect(() => {
-    const currentAccount = getCurrentAccount<CommonUsuarioClaims>();
+    setCurrentAccount(getCurrentAccount<CommonUsuarioClaims>());
     async function initialGetBoletos() {
-      if (!currentAccount) return
-
       const boletos = await getBoletos(currentAccount?.id!);
       setBoletos(boletos);
       setIsCurrentLoading(false);
@@ -35,37 +34,74 @@ function App() {
     <Box
       bgColor={'white'}
       overflowY={"hidden"}
+
+      paddingTop={5}
     >
       {/* <MonthInput/> */}
-      <div className="wrapper">
-        {isCurrentLoading ? (
-          <CircularLoading />
-        ) : (
-          <>
+      <Box
+
+        display={"flex"}
+        flexDirection={"column"}
+        gap={6}
+      >
+        <Box
+        >
+          <Text
+            color={'primary'}
+            fontSize={'xl'}
+            fontWeight={400}
+            lineHeight={'1.2rem'}
+          >
+            Olá  <strong>Alexandre</strong>, bem vindo de volta!
             <Text
-              fontSize={"1.25rem"}
-              fontWeight={"bold"}
-              color={"black"}
-              marginBottom={"1rem"}
+              color={'softText'}
+              fontSize={'sm'}
             >
-              Boletos
+              Gerencie seus pagamentos com facilidade e segurança.
             </Text>
-            {boletos.map((boleto, index) => (
+          </Text>
+        </Box>
+        <Box>
+          <Text
+            fontSize={"1.25rem"}
+            fontWeight={"bold"}
+            color={"black"}
+            marginBottom={"1rem"}
+          >
+            Boletos
+          </Text>
+          {isCurrentLoading ? (
+            <CardListSkeleton />
+          ) : (
+            <>
+
               <Box
-                key={index}
+                display={"grid"}
+                rowGap={8}
+                gridTemplateColumns={{ xl: "repeat(3, 1fr)", lg: "repeat(2,1fr)", base: "repeat(1, 1fr)" }}
+                columnGap={6}
+                width={'full'}
               >
-                <BoletoCard
-                  boleto={boleto}
-                  setCurrentFile={setCurrentFile}
-                  setCurrentFileName={setCurrentFileName}
-                  setCurrentBoleto={setCurrentBoleto}
-                  openModal={openModal}
-                />
+                {boletos.map((boleto, index) => (
+                  <Box
+                    key={index}
+                  >
+                    <BoletoCard
+                      boleto={boleto}
+                      setCurrentFile={setCurrentFile}
+                      setCurrentFileName={setCurrentFileName}
+                      setCurrentBoleto={setCurrentBoleto}
+                      openModal={openModal}
+                    />
+                  </Box>
+                ))}
               </Box>
-            ))}
-          </>
-        )}
-      </div>
+            </>
+          )}
+
+        </Box>
+
+      </Box>
       <Box
       >
         <Modal

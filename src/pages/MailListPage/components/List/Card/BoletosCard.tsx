@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
-import { BaseConverterStack, pdfToBlob } from '../../../../core/core';
+import { BaseConverterStack, pdfToBlob } from '../../../../../core/core';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { Boleto } from '../../../../types';
+import { Boleto } from '../../../../../types';
 
 interface Props {
   boleto: Boleto,
@@ -30,15 +30,16 @@ export const BoletoCard: React.FC<Props> = ({
         }
       }}
       cursor={"pointer"}
-      width={{ md: '21rem', base: 'full' }}
+      width={'full'}
       bg="white"
-      boxShadow={"2xl"}
+      boxShadow={"lg"}
       dropShadow={'2xl'}
       rounded="lg"
       display={"flex"}
       height={"fit-content"}
       alignItems={"center"}
       paddingX={".75rem"}
+      paddingY={".8rem"}
       gap={".875rem"}
     >
       <Avatar

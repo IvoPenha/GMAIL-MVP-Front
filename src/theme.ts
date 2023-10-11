@@ -9,9 +9,11 @@ export const theme = extendTheme({
     danger: "#CF4949",
     warning: "#FFEDBF",
     neutral: "#787878",
+    softText: "#474747"
   },
   fonts: {
     body: "Roboto",
     logo: "Audiowide",
   },
+
 });
