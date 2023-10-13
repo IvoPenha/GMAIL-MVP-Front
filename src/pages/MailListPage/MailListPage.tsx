@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Modal, CardListSkeleton } from "../../shared/";
-import { Box, Text } from "@chakra-ui/react";
+import { Modal, CardListSkeleton, SkeletonEstatisticaCard } from "../../shared/";
+import { Box, Flex, SkeletonText, Text } from "@chakra-ui/react";
 import { Boleto, CommonUsuarioClaims } from "../../types";
 import { getBoletos } from '../../services/';
 // import { MonthInput } from '../components/monthInput';
-import { BoletoModalContent, BoletoCard } from './components/';
+import { BoletoModalContent, BoletoCard, EstatisticaCard, CarouselContainer } from './components/';
 import { useAuth } from '../../hooks';
 
 function App() {
@@ -30,6 +30,15 @@ function App() {
 
     initialGetBoletos();
   }, []);
+
+  const estatisticas = [
+    { title: 'A pagar', value: 5 },
+    { title: 'Vencidos', value: 2 },
+    { title: 'Pagos', value: 10 },
+    { title: 'Cancelados', value: 1 }
+  ];
+
+
   return (
     <Box
       bgColor={'white'}
@@ -45,6 +54,7 @@ function App() {
         gap={6}
       >
         <Box
+          display={{ md: 'flex', base: 'none' }}
         >
           <Text
             color={'primary'}
@@ -52,7 +62,12 @@ function App() {
             fontWeight={400}
             lineHeight={'1.2rem'}
           >
-            Olá  <strong>Alexandre</strong>, bem vindo de volta!
+            <Flex
+              alignItems={'center'}
+              gap={1}
+            >
+              Olá  <strong>{currentAccount ? currentAccount?.nome : <SkeletonText noOfLines={1} width={'5rem'} marginRight={-1} />}</strong>, bem vindo de volta!
+            </Flex>
             <Text
               color={'softText'}
               fontSize={'sm'}
@@ -60,6 +75,47 @@ function App() {
               Gerencie seus pagamentos com facilidade e segurança.
             </Text>
           </Text>
+        </Box>
+        <Box>
+          <Text
+            fontSize={"1.25rem"}
+            fontWeight={"bold"}
+            color={"black"}
+            marginBottom={"1rem"}
+          >
+            Estatisticas
+          </Text>
+          <CarouselContainer
+          >
+            {
+              isCurrentLoading ? (
+                estatisticas.map((estatistica, index) => (
+                  <Box
+                    key={index}
+                  >
+                    <SkeletonEstatisticaCard
+                      title={estatistica.title}
+                      margin={index === 0 ? undefined : 'left'}
+                    />
+                  </Box>
+                ))
+              ) : (
+                estatisticas.map((estatistica, index) => (
+                  <Box
+                    key={index}
+                  >
+                    <EstatisticaCard
+                      title={estatistica.title}
+                      value={estatistica.value}
+                      margin={index === 0 ? undefined : 'left'}
+                    />
+                  </Box>
+                ))
+              )
+            }
+
+
+          </CarouselContainer>
         </Box>
         <Box>
           <Text

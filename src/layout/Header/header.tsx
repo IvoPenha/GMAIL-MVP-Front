@@ -13,13 +13,19 @@ import {
 //   AiOutlineCloseCircle as CloseIcon,
 //   AiOutlineMenuFold as HamburgerIcon,
 // } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
+import { FiArrowLeft } from 'react-icons/fi';
+import { getCurrentAccount } from '../../core';
+import { CommonUsuarioClaims } from '../../types';
 
 export function Header() {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const navigateHome = () => navigate("/");
+  const isSettingsPage = useMatch("/settings");
+  const currentAccount = getCurrentAccount<CommonUsuarioClaims>();
+
   return (
     <>
       <Box bg={"primary"} px={{ md: "10rem", base: '1rem' }}>
@@ -39,7 +45,7 @@ export function Header() {
           <HStack spacing={8} alignItems={"center"}>
             <Box
               fontSize={25}
-              display={"flex"}
+              display={{ md: "flex", base: 'none' }}
               alignItems={"center"}
               gap={2}
               _hover={{ cursor: "pointer" }}
@@ -55,6 +61,23 @@ export function Header() {
               >
                 docpost
               </Text>
+            </Box>
+
+            <Box
+              fontSize={18}
+              display={{ md: "none", base: 'flex' }}
+              color={'surface'}
+              height={'full'}
+              gap={2}
+              alignItems={"center"}
+            // onClick={navigateHome}
+            >
+              {
+                isSettingsPage ? <> <Text fontSize={22} cursor={'pointer'} _hover={{
+                  opacity: .9
+                }} onClick={navigateHome}><FiArrowLeft /></Text> Preferências</> : `Olá ${currentAccount?.nome}!`
+              }
+
             </Box>
           </HStack>
           <Flex>
