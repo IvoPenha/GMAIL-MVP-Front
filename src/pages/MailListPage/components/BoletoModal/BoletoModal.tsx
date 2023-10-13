@@ -1,11 +1,11 @@
 import { Box, Flex, Icon, Text } from '@chakra-ui/react';
-import { AiFillCloseCircle } from 'react-icons/ai';
 import CustomChakraUiButton from '../../../../shared/components/Button/Button';
 import { useState } from 'react'
 import { downloadBlob } from '../../../../core/core';
 import { FaCheck } from 'react-icons/fa';
 import PDFViewer from '../../../../core/PDFViewer/PdfViewer';
 import './BoletoModal.css'
+import { StatusMenu } from '..';
 
 interface Props {
   currentFile?: Blob | null,
@@ -31,6 +31,7 @@ export const BoletoModalContent: React.FC<Props> = ({
     display={"flex"}
     flexDirection={"column"}
     gap={'5rem'}
+    paddingTop={20}
   >
     <Box
       borderBottom={"1px solid "}
@@ -66,20 +67,22 @@ export const BoletoModalContent: React.FC<Props> = ({
               {valor}
             </Text>
           </Flex>
-          <Flex flexDir={"column"} gap={0.5}>
+          <Flex flexDir={"column"} gap={0.5} align={'start'} >
             <Text color={"neutral"} fontSize={"sm"}>
               Status
             </Text>
             <Box
-              display={"flex"}
-              alignItems={"center"}
-              paddingX={".5rem"}
-              fontSize={"sm"}
-              gap={2}
-              color={"danger"}
+              width={'full'}
+              display={'flex'}
+              justifyContent={'start'}
+              w={'6.5rem'}
             >
-              <AiFillCloseCircle fontSize={"1.2rem"} />
-              Vencido
+              <StatusMenu
+                value='Pago'
+                onValueChange={() => {
+                  // boleto.assunto = 'Vencido';
+                }}
+              />
             </Box>
           </Flex>
         </Flex>

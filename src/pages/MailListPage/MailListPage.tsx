@@ -95,7 +95,6 @@ function App() {
                   >
                     <SkeletonEstatisticaCard
                       title={estatistica.title}
-                      margin={index === 0 ? undefined : 'left'}
                     />
                   </Box>
                 ))
@@ -129,7 +128,10 @@ function App() {
           {isCurrentLoading ? (
             <CardListSkeleton />
           ) : (
-            <>
+            <Box
+              paddingY={2}
+              paddingX={.5}
+            >
 
               <Box
                 display={"grid"}
@@ -152,7 +154,7 @@ function App() {
                   </Box>
                 ))}
               </Box>
-            </>
+            </Box>
           )}
 
         </Box>

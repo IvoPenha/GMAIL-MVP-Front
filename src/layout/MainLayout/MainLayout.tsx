@@ -10,6 +10,7 @@ export const MainLayout: React.FC = () => {
       <Header />
       <Box
         px={{ md: "10rem", base: '1rem' }}
+        paddingBottom={40}
       >
         <Outlet />
       </Box>

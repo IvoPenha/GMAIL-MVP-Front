@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { BaseConverterStack, pdfToBlob } from '../../../../../core/core';
-import { AiFillCloseCircle } from 'react-icons/ai';
 import { Boleto } from '../../../../../types';
+import { StatusMenu } from '../..';
 
 interface Props {
   boleto: Boleto,
@@ -30,6 +30,7 @@ export const BoletoCard: React.FC<Props> = ({
         }
       }}
       cursor={"pointer"}
+      zIndex={0}
       width={'full'}
       bg="white"
       boxShadow={"lg"}
@@ -46,7 +47,9 @@ export const BoletoCard: React.FC<Props> = ({
         size="md"
         name={boleto.enviadoPor}
       />
-      <Flex justifyContent={"space-between"} w={"100%"}>
+      <Flex justifyContent={"space-between"} w={"100%"}
+
+      >
         <Box
           maxWidth={"12rem"}
           display={"flex"}
@@ -70,19 +73,19 @@ export const BoletoCard: React.FC<Props> = ({
           </Text>
           <Text fontWeight={"bold"}> R$ {boleto.valor} </Text>
         </Box>
-
         <Box
-          display={"flex"}
-          alignItems={"center"}
-          paddingX={".5rem"}
-          fontSize={"sm"}
-          gap={2}
-          color={"danger"}
+          onClick={e => e.stopPropagation()}
+          display={'flex'}
+          alignItems={'center'}
         >
-          <AiFillCloseCircle fontSize={"1.2rem"} />
-          Vencido
+          <StatusMenu
+            value='Vencido'
+            onValueChange={() => {
+              boleto.assunto = 'Vencido';
+            }}
+          />
         </Box>
-      </Flex>
-    </Box>
+      </Flex >
+    </Box >
   )
 }

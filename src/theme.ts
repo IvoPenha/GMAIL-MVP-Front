@@ -1,5 +1,13 @@
 import { extendTheme } from "@chakra-ui/react";
-
+const breakpoints = {
+  base: "0px",
+  sm: "320px",
+  md: "768px",
+  lg: "960px",
+  xl: "1200px",
+  "2xl": "1536px",
+  "3xl": "1920px",
+};
 const Menu = {
   baseStyle: {
     menu: {
@@ -7,6 +15,7 @@ const Menu = {
       outline: 'none',
 
     },
+    breakpoints,
     item: {
       maxW: '8rem',
       borderRadius: 'none',
@@ -36,6 +45,9 @@ const Menu = {
       minWidth: 'none',
       width: '8rem',
       paddingY: '8px',
+      position: 'absolute',
+      inset: '0px auto auto 0px',
+      transform: 'translateX(-50%)',
 
     }
   }

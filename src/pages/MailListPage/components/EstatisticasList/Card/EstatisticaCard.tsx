@@ -15,6 +15,7 @@ export const EstatisticaCard: React.FC<EstatisticaCardProps> = ({
   return (
     <Box
       width={'full'}
+      className='estatisticaCard'
       padding={margin === 'left' ? '0 .5rem 0 .5rem' : margin === 'right' ? '0 1rem 0 0' : '0 .5rem 0 0'}
     >
       <Box
@@ -28,6 +29,7 @@ export const EstatisticaCard: React.FC<EstatisticaCardProps> = ({
         height={'120px'}
         borderRadius={'10px'}
         width={'100%'}
+        maxWidth={{ lg: '20rem', base: 'none' }}
       >
         <Box fontSize={{ sm: '1rem', base: '.7rem' }} fontWeight={500} color="subtitle">
           {title}

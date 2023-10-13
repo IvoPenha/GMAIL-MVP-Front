@@ -9,6 +9,7 @@ export const CardListSkeleton = () => {
       gridTemplateColumns={{ xl: "repeat(3, 1fr)", lg: "repeat(2,1fr)", base: "repeat(1, 1fr)" }}
       columnGap={6}
       width={'full'}
+      paddingY={2}
     >
       <CardSkeleton />
       <CardSkeleton />

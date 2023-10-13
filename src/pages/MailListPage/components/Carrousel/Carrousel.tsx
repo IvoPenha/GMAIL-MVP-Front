@@ -33,19 +33,29 @@ export const CarouselContainer = ({
   const sliderRef = useRef<any>();
 
   return (
-    <Box>
+    <Box
+      height={'120px'}
+    >
       <Box
-        display={"flex"}
-        alignItems={"center"}
-        width={"100%"}
-        height={"100%"}
-        gap={8}
-        borderRadius={8}
+        display={{ base: "block", lg: "none" }}
       >
+        <Slider {...settings} ref={sliderRef} >
+          {children}
+        </Slider>
       </Box>
-      <Slider {...settings} ref={sliderRef} >
+      <Box
+        display={{ base: "none", lg: "flex" }}
+        width={'full'}
+        justifyContent={'space-between'}
+        __css={{
+          '.estatisticaCard': {
+            minW: { '2xl': '18rem', xl: '13rem', lg: '10rem' },
+            padding: 0
+          }
+        }}
+      >
         {children}
-      </Slider>
-    </Box>
+      </Box>
+    </Box >
   );
 };
