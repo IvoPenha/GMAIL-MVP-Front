@@ -2,12 +2,13 @@ import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { BaseConverterStack, pdfToBlob } from '../../../../../core/core';
 import { Boleto } from '../../../../../types';
 import { StatusMenu } from '../..';
+import { patchBoletoSituacao } from '../../../../../services';
 
 interface Props {
   boleto: Boleto,
   setCurrentFile: (file: Blob | null) => void,
   setCurrentFileName: (fileName: string) => void,
-  setCurrentBoleto: (boleto: Boleto | null) => void,
+  setCurrentBoleto: React.Dispatch<React.SetStateAction<Boleto | null>>,
   openModal: (boolean?: boolean) => void
 }
 
@@ -16,8 +17,11 @@ export const BoletoCard: React.FC<Props> = ({
   setCurrentFile,
   setCurrentFileName,
   setCurrentBoleto,
-  openModal
+  openModal,
 }) => {
+
+
+
   return (
     <Box
       onClick={() => {
@@ -79,9 +83,11 @@ export const BoletoCard: React.FC<Props> = ({
           alignItems={'center'}
         >
           <StatusMenu
-            value='Vencido'
-            onValueChange={() => {
-              boleto.assunto = 'Vencido';
+            value={boleto.Situacao}
+            onValueChange={async (value) => {
+              const updatedBoleto = { ...boleto, Situacao: value };
+              setCurrentBoleto(updatedBoleto);
+              await patchBoletoSituacao(boleto.id, value);
             }}
           />
         </Box>

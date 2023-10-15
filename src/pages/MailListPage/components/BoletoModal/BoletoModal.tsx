@@ -6,32 +6,32 @@ import { FaCheck } from 'react-icons/fa';
 import PDFViewer from '../../../../core/PDFViewer/PdfViewer';
 import './BoletoModal.css'
 import { StatusMenu } from '..';
+import { Boleto } from '../../../../types';
+import { patchBoletoSituacao } from '../../../../services';
+import { Situacao } from '../../../../shared';
 
 interface Props {
   currentFile?: Blob | null,
   currentFileName?: string,
-  codigoBarras?: string,
-  dataVencimento?: string,
-  enviadoPor?: string,
-  valor?: number
+  boleto: Boleto,
+  changeSituation: (id: number, situacao: Situacao) => void
 }
 
 export const BoletoModalContent: React.FC<Props> = ({
-  codigoBarras,
-  dataVencimento,
-  enviadoPor,
-  valor,
+  boleto,
   currentFile,
-  currentFileName
+  currentFileName,
+  changeSituation
 }) => {
   const [isCopying, setIsCopying] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
+  const { codigoBarras, dataVencimento, enviadoPor, valor } = boleto
 
   return <Box
     display={"flex"}
     flexDirection={"column"}
     gap={'5rem'}
-    paddingTop={20}
+    paddingTop={10}
   >
     <Box
       borderBottom={"1px solid "}
@@ -78,9 +78,11 @@ export const BoletoModalContent: React.FC<Props> = ({
               w={'6.5rem'}
             >
               <StatusMenu
-                value='Pago'
-                onValueChange={() => {
-                  // boleto.assunto = 'Vencido';
+                value={boleto.Situacao}
+                onValueChange={async (value) => {
+                  boleto.Situacao = value;
+                  changeSituation(boleto.id, value)
+                  patchBoletoSituacao(boleto.id, value);
                 }}
               />
             </Box>

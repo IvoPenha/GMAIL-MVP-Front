@@ -1,10 +1,11 @@
 import { Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure } from '@chakra-ui/react';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { AiFillCheckCircle, AiFillCloseCircle, AiFillMinusCircle } from 'react-icons/ai';
+import { Situacao } from '../../../../../shared';
 
 interface StatusMenuProps {
   onValueChange: (value: any) => void;
-  value: string;
+  value: Situacao;
 }
 
 export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) => {
@@ -18,12 +19,25 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
   const canceladoRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const [currentRef, setCurrentRef] = useState<React.RefObject<HTMLButtonElement> | null>(internalValue === 'Pago' ? pagoRef : internalValue === 'Pendente' ? pendenteRef : internalValue === 'Vencido' ? vencidoRef : canceladoRef);
+  const [currentRef, setCurrentRef] = useState<React.RefObject<HTMLButtonElement> | null>(() => {
+    switch (internalValue) {
+      case Situacao.Pago:
+        return pagoRef;
+      case Situacao.Pendente:
+        return pendenteRef;
+      case Situacao.Vencido:
+        return vencidoRef;
+      case Situacao.Cancelado:
+        return canceladoRef;
+      default:
+        return null;
+    }
+  });
 
 
   useEffect(() => {
     switch (internalValue) {
-      case 'Pago':
+      case Situacao.Pago:
         if (menuRef.current) {
           menuRef.current.style.left = '-3rem';
           menuRef.current.style.marginTop = '-60px';
@@ -32,7 +46,7 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
         setCurrentRef(pagoRef);
         setElementValue(<Text color={'success'} display={'flex'} gap={2} alignItems={'center'} ><AiFillCheckCircle fontSize={18} /> Pago</Text>);
         break;
-      case 'Pendente':
+      case Situacao.Pendente:
         if (menuRef.current) {
           menuRef.current.style.left = '-1.4rem';
           menuRef.current.style.marginTop = '-100px';
@@ -41,7 +55,7 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
         setCurrentRef(pendenteRef);
         setElementValue(<Text color={'soft'} display={'flex'} gap={2} alignItems={'center'}  ><AiFillMinusCircle fontSize={18} /> Pendente</Text>);
         break;
-      case 'Vencido':
+      case Situacao.Vencido:
         if (menuRef.current) {
           menuRef.current.style.left = '-1.4rem';
           menuRef.current.style.marginTop = '-140px';
@@ -50,7 +64,7 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
         setCurrentRef(vencidoRef);
         setElementValue(<Text color={'danger'} display={'flex'} gap={2} alignItems={'center'} ><AiFillCloseCircle fontSize={18} /> Vencido</Text>);
         break;
-      case 'Cancelado':
+      case Situacao.Cancelado:
         if (menuRef.current) {
           menuRef.current.style.left = '-.8rem';
           menuRef.current.style.marginTop = '-180px';
@@ -62,7 +76,7 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
     }
   }, [internalValue])
 
-  const onChange = (value: string) => {
+  const onChange = (value: Situacao) => {
     setInternalValue(value);
     onValueChange(value);
   }
@@ -93,13 +107,13 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
           gap={'6px'}
           ref={pagoRef}
           color={'success'}
-          onClick={() => onChange('Pago')}
+          onClick={() => onChange(Situacao.Pago)}
         > <AiFillCheckCircle /> Pago</MenuItem>
         <MenuItem
           display={'flex'}
           gap={'6px'}
           color={'soft'}
-          onClick={() => onChange('Pendente')}
+          onClick={() => onChange(Situacao.Pendente)}
           ref={pendenteRef}
         >
           <AiFillMinusCircle />
@@ -108,7 +122,7 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
           display={'flex'}
           gap={'6px'}
           color={'danger'}
-          onClick={() => onChange('Vencido')}
+          onClick={() => onChange(Situacao.Vencido)}
           ref={vencidoRef}
         >
           <AiFillCloseCircle />
@@ -117,7 +131,7 @@ export const StatusMenu: React.FC<StatusMenuProps> = ({ onValueChange, value }) 
           display={'flex'}
           gap={'6px'}
           color={'yellow'}
-          onClick={() => onChange('Cancelado')}
+          onClick={() => onChange(Situacao.Cancelado)}
           ref={canceladoRef}
         >
           <AiFillCloseCircle />

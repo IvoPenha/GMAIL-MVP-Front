@@ -1,7 +1,8 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { logos } from './images'
 
+import './animation.css'
 export const Logo = (
   { animated = false }: { animated?: boolean }
 ) => {
@@ -9,6 +10,7 @@ export const Logo = (
   const [currentFrame, setCurrentFrame] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  console.log(animated);
 
 
   function handleAnimationComplete() {
@@ -22,7 +24,7 @@ export const Logo = (
     if (isStopped) return
     if (currentFrame < 8) {
       setCurrentFrame(currentFrame + 1)
-      setCurrentLogo(logos[currentFrame])
+      // setCurrentLogo(logos[currentFrame])
     }
     if (currentFrame === 8) {
       handleAnimationComplete()
@@ -35,7 +37,7 @@ export const Logo = (
     }, 50)
   }, [currentFrame])
 
-  const [currentLogo, setCurrentLogo] = useState(logos[0])
+  // const [currentLogo, setCurrentLogo] = useState(logos[0])
 
   return (
     <Flex
@@ -51,12 +53,20 @@ export const Logo = (
         position={'absolute'}
         zIndex={!isLoaded ? 1 : -1}
       />
-      <Image
-        src={animated ? currentLogo : logos[8]}
-        alt={'eager'}
-        width={'5.3rem'}
-        height={'5.3rem'}
-      />
+      <svg width="5.3rem" height="'5.3rem" viewBox="0 0 206 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="206" height="206" rx="22" fill="white" className="svg-elem-1"></rect>
+        <rect x="22" y="22" width="15" height="148" rx="7.5" fill="#369FFF" className="svg-elem-2"></rect>
+        <rect x="43" y="22" width="15" height="52" rx="7.5" fill="#369FFF" className="svg-elem-3"></rect>
+        <rect x="43" y="80" width="15" height="66" rx="7.5" fill="#369FFF" className="svg-elem-4"></rect>
+        <rect x="64" y="22" width="15" height="124" rx="7.5" fill="#369FFF" className="svg-elem-5"></rect>
+        <rect x="85" y="22" width="15" height="124" rx="7.5" fill="#369FFF" className="svg-elem-6"></rect>
+        <rect x="106" y="22" width="15" height="124" rx="7.5" fill="#369FFF" className="svg-elem-7"></rect>
+        <rect x="127" y="22" width="15" height="124" rx="7.5" fill="#369FFF" className="svg-elem-8"></rect>
+        <rect x="148" y="22" width="15" height="38" rx="7.5" fill="#369FFF" className="svg-elem-9"></rect>
+        <rect x="148" y="108" width="15" height="38" rx="7.5" fill="#369FFF" className="svg-elem-10"></rect>
+        <rect x="169" y="22" width="15" height="148" rx="7.5" fill="#369FFF" className="svg-elem-11"></rect>
+      </svg>
+
       <Text
         fontSize={'3.8rem'}
         color={'surface'}

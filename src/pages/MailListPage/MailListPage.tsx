@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Modal, CardListSkeleton, SkeletonEstatisticaCard } from "../../shared/";
+import { Modal, CardListSkeleton, SkeletonEstatisticaCard, Situacao } from "../../shared/";
 import { Box, Flex, SkeletonText, Text } from "@chakra-ui/react";
 import { Boleto, CommonUsuarioClaims } from "../../types";
 import { getBoletos } from '../../services/';
 // import { MonthInput } from '../components/monthInput';
 import { BoletoModalContent, BoletoCard, EstatisticaCard, CarouselContainer } from './components/';
 import { useAuth } from '../../hooks';
+
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,16 +19,38 @@ function App() {
   const [boletos, setBoletos] = useState<Boleto[]>([]);
   const [currentAccount, setCurrentAccount] = useState<CommonUsuarioClaims | undefined>();
 
+
   const { getCurrentAccount } = useAuth()
 
-  useEffect(() => {
-    setCurrentAccount(getCurrentAccount<CommonUsuarioClaims>());
-    async function initialGetBoletos() {
-      const boletos = await getBoletos(currentAccount?.id!);
-      setBoletos(boletos);
-      setIsCurrentLoading(false);
-    }
+  async function updateBoleto(id: number, newValue: Situacao) {
+    const newBoletos = [...boletos].map(item => {
+      if (+item.id !== +id) {
+        return item;
+      }
+      // Crie um novo objeto com as propriedades do boleto existente
+      return {
+        ...item,
+        Situacao: newValue
+      };
+    });
+    await setBoletos([])
+    await setBoletos([...newBoletos]);
 
+  }
+
+  useEffect(() => {
+    console.log('mudei', boletos)
+  }, [boletos]);
+
+  async function initialGetBoletos() {
+    const account = await getCurrentAccount<CommonUsuarioClaims>()
+    setCurrentAccount(account);
+    const boletos = await getBoletos(account?.id!);
+    setBoletos(boletos);
+    setIsCurrentLoading(false);
+  }
+
+  useEffect(() => {
     initialGetBoletos();
   }, []);
 
@@ -48,7 +71,6 @@ function App() {
     >
       {/* <MonthInput/> */}
       <Box
-
         display={"flex"}
         flexDirection={"column"}
         gap={6}
@@ -140,18 +162,15 @@ function App() {
                 columnGap={6}
                 width={'full'}
               >
-                {boletos.map((boleto, index) => (
-                  <Box
-                    key={index}
-                  >
-                    <BoletoCard
-                      boleto={boleto}
-                      setCurrentFile={setCurrentFile}
-                      setCurrentFileName={setCurrentFileName}
-                      setCurrentBoleto={setCurrentBoleto}
-                      openModal={openModal}
-                    />
-                  </Box>
+                {boletos.map((boleto) => (
+                  <BoletoCard
+                    key={boleto.id}
+                    boleto={boleto}
+                    setCurrentFile={setCurrentFile}
+                    setCurrentFileName={setCurrentFileName}
+                    setCurrentBoleto={setCurrentBoleto}
+                    openModal={openModal}
+                  />
                 ))}
               </Box>
             </Box>
@@ -166,14 +185,12 @@ function App() {
           isOpen={isModalOpen}
           OnClose={closeModal}
         >
-          <BoletoModalContent
-            codigoBarras={currentBoleto?.codigoBarras}
-            dataVencimento={currentBoleto?.dataVencimento}
-            enviadoPor={currentBoleto?.enviadoPor}
-            valor={currentBoleto?.valor}
+          {currentBoleto && <BoletoModalContent
+            boleto={currentBoleto}
             currentFile={currenntFile}
             currentFileName={currentFileName}
-          />
+            changeSituation={updateBoleto}
+          />}
         </Modal>
       </Box >
     </Box >

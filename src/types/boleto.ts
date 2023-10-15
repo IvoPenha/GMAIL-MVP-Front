@@ -1,3 +1,5 @@
+import { Situacao } from '../shared';
+
 export type Boleto = {
   id: number;
   enviadoPor: string;
@@ -10,4 +12,5 @@ export type Boleto = {
   linhaDigitavel: string;
   codigoBarras: string;
   base64: string;
+  Situacao: Situacao;
 };

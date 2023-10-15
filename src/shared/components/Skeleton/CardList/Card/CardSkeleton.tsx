@@ -12,7 +12,7 @@ export const CardSkeleton = () => {
       height={"fit-content"}
       alignItems={"center"}
       paddingX={".75rem"}
-      paddingY={".8rem"}
+      paddingY={"1.5rem"}
       gap={".875rem"}
     >
       <SkeletonCircle size='12' w={'14'} />
