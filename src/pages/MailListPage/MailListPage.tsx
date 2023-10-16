@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Modal, CardListSkeleton, SkeletonEstatisticaCard, Situacao } from "../../shared/";
+import { Modal, CardListSkeleton, SkeletonEstatisticaCard, Situacao, MonthInput } from "../../shared/";
 import { Box, Flex, SkeletonText, Text } from "@chakra-ui/react";
 import { Boleto, CommonUsuarioClaims } from "../../types";
 import { getBoletos } from '../../services/';
 // import { MonthInput } from '../components/monthInput';
 import { BoletoModalContent, BoletoCard, EstatisticaCard, CarouselContainer } from './components/';
 import { useAuth } from '../../hooks';
-
+import { getFirstAndLastDayOfYearMonths } from '../../core';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +18,7 @@ function App() {
   const [isCurrentLoading, setIsCurrentLoading] = useState(true);
   const [boletos, setBoletos] = useState<Boleto[]>([]);
   const [currentAccount, setCurrentAccount] = useState<CommonUsuarioClaims | undefined>();
+  const [monthFilter, setMonthFilter] = useState(getFirstAndLastDayOfYearMonths(new Date().getMonth() + 1))
 
 
   const { getCurrentAccount } = useAuth()
@@ -38,10 +39,6 @@ function App() {
 
   }
 
-  useEffect(() => {
-    console.log('mudei', boletos)
-  }, [boletos]);
-
   async function initialGetBoletos() {
     const account = await getCurrentAccount<CommonUsuarioClaims>()
     setCurrentAccount(account);
@@ -53,6 +50,13 @@ function App() {
   useEffect(() => {
     initialGetBoletos();
   }, []);
+
+  useEffect(() => {
+    console.log('alterei month input');
+
+    console.log(monthFilter)
+
+  }, [monthFilter])
 
   const estatisticas = [
     { title: 'A pagar', value: 5 },
@@ -69,7 +73,6 @@ function App() {
 
       paddingTop={5}
     >
-      {/* <MonthInput/> */}
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -144,9 +147,19 @@ function App() {
             fontWeight={"bold"}
             color={"black"}
             marginBottom={"1rem"}
+            w={'full'}
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
           >
             Boletos
+            <MonthInput
+              onChange={
+                (value) => { setMonthFilter(value) }
+              }
+            />
           </Text>
+
           {isCurrentLoading ? (
             <CardListSkeleton />
           ) : (

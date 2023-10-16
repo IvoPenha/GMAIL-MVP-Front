@@ -25,3 +25,6 @@ button:focus-visible {
   overflow: hidden;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator:before {
+  display: none !important;
+}
