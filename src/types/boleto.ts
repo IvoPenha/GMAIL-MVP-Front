@@ -12,5 +12,5 @@ export type Boleto = {
   linhaDigitavel: string;
   codigoBarras: string;
   base64: string;
-  Situacao: Situacao;
+  situacao: Situacao;
 };

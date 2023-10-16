@@ -83,9 +83,9 @@ export const BoletoCard: React.FC<Props> = ({
           alignItems={'center'}
         >
           <StatusMenu
-            value={boleto.Situacao}
+            value={boleto.situacao}
             onValueChange={async (value) => {
-              const updatedBoleto = { ...boleto, Situacao: value };
+              const updatedBoleto = { ...boleto, situacao: value };
               setCurrentBoleto(updatedBoleto);
               await patchBoletoSituacao(boleto.id, value);
             }}

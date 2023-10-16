@@ -78,9 +78,9 @@ export const BoletoModalContent: React.FC<Props> = ({
               w={'6.5rem'}
             >
               <StatusMenu
-                value={boleto.Situacao}
+                value={boleto.situacao}
                 onValueChange={async (value) => {
-                  boleto.Situacao = value;
+                  boleto.situacao = value;
                   changeSituation(boleto.id, value)
                   patchBoletoSituacao(boleto.id, value);
                 }}
