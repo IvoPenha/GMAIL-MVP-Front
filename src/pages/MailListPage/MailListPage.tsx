@@ -89,6 +89,7 @@ function App() {
     }
 
     if (monthFilter) {
+      setIsCurrentLoading(true);
       console.log(monthFilter)
       filterParams.delete('month');
       filterParams.append('month', monthFilter)
@@ -100,9 +101,11 @@ function App() {
 
   useEffect(() => {
     async function getBoletosWithParams() {
+      setIsCurrentLoading(true);
       if (!currentAccount) return;
       const boletos = await getBoletos(currentAccount.id, searchParams);
       setBoletos(boletos);
+      setIsCurrentLoading(false);
     }
     getBoletosWithParams();
 

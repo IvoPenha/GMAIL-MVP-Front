@@ -7,6 +7,11 @@
 .react-pdf__Page__textContent {
   display: none !important;
 } */
+
+.annotationLayer{
+  max-height: 50px;
+}
+
 .boleto-modal-content canvas{
   width: 100% !important;
   height: auto !important;

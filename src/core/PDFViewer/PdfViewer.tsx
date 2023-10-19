@@ -62,10 +62,10 @@ function PDFViewer({ fileItem }: Props) {
       >
         <Page
           canvasRef={canvasRef as Ref<HTMLCanvasElement>}
+          renderTextLayer={false}
           // pageNumber={currentPage}
           pageNumber={1}
           scale={1}
-          renderTextLayer={false}
           className={'pdfcanva'}
         />
       </Document>
