@@ -1,6 +1,6 @@
 function getFirstAndLastDayOfYearMonths(
   month: number
-): { firstDayOfPreviousMonth: string; lastDayOfNextMonth: string } | null {
+): { dataInicio: string; dataFim: string } | null {
   // Validação do mês (deve estar entre 1 e 12)
   if (month < 1 || month > 12) {
     console.error("Mês inválido. Forneça um mês entre 1 e 12.");
@@ -11,20 +11,20 @@ function getFirstAndLastDayOfYearMonths(
   const currentYear = new Date().getFullYear();
 
   // Calcula o primeiro dia do mês anterior
-  const firstDayOfPreviousMonth = new Date(
+  const dataInicio = new Date(
     currentYear,
     month - 1,
     1
   ).toLocaleDateString("pt-br");
 
   // Calcula o último dia do mês seguinte
-  const lastDayOfNextMonth = new Date(currentYear, month, 0).toLocaleDateString(
+  const dataFim = new Date(currentYear, month, 0).toLocaleDateString(
     "pt-br"
   );
 
   return {
-    firstDayOfPreviousMonth,
-    lastDayOfNextMonth,
+    dataInicio,
+    dataFim,
   };
 }
 function getDateToYYYYMM(date: Date) {
@@ -38,8 +38,21 @@ function getMonthfromYYYYMMstring(dateValue: string) {
   return date.getMonth() + 2;
 }
 
+function getFirstDayFromPreviousMonthAndLastDayOfTheMonthByYYYYMMstring(dateValue: string) {
+  const date = new Date(dateValue);
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const dataInicio = new Date(year, month - 2, 1);
+  const dataFim = new Date(year, month, 0);
+  return {
+    dataInicio: dataInicio.toLocaleDateString('pt-br'),
+    dataFim: dataFim.toLocaleDateString('pt-br')
+  }
+}
+
 export {
   getFirstAndLastDayOfYearMonths,
   getDateToYYYYMM,
   getMonthfromYYYYMMstring,
+  getFirstDayFromPreviousMonthAndLastDayOfTheMonthByYYYYMMstring
 }

@@ -17,7 +17,7 @@ export const CarouselContainer = ({
     arrows: false,
     slidesToShow: 4,
     slidesToScroll: 0,
-    initialSlide: 1,
+    initialSlide: 0,
     draggable: true,
     responsive: [
       {

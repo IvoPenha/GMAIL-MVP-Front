@@ -52,7 +52,7 @@ const CustomModal = ({
         {<ModalHeader>{Title}</ModalHeader>}
         <ModalCloseButton zIndex={3000} />
         <ModalBody
-          paddingX={{ base: '1rem', md: '10%' }}
+          paddingX={{ md: '10%', base: '1rem' }}
         >
           {children}
         </ModalBody>

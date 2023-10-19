@@ -34,10 +34,9 @@ export const BoletoCard: React.FC<Props> = ({
         }
       }}
       cursor={"pointer"}
-      zIndex={0}
       width={'full'}
       bg="white"
-      boxShadow={"lg"}
+      boxShadow={"0px 2px 5px -3px rgba(0, 0, 0)"}
       dropShadow={'2xl'}
       rounded="lg"
       display={"flex"}
@@ -71,7 +70,7 @@ export const BoletoCard: React.FC<Props> = ({
           </Text>
           <Text textColor={"gray.500"}>
             {" "}
-            {new Date(boleto.dataEmail).toLocaleDateString(
+            {new Date(boleto.dataVencimento).toLocaleDateString(
               "pt-Br"
             )}{" "}
           </Text>
@@ -81,12 +80,15 @@ export const BoletoCard: React.FC<Props> = ({
           onClick={e => e.stopPropagation()}
           display={'flex'}
           alignItems={'center'}
+          w={'30%'}
+          justifyContent={'end'}
         >
           <StatusMenu
             value={boleto.situacao}
             onValueChange={async (value) => {
               const updatedBoleto = { ...boleto, situacao: value };
               setCurrentBoleto(updatedBoleto);
+              boleto.situacao = value;
               await patchBoletoSituacao(boleto.id, value);
             }}
           />

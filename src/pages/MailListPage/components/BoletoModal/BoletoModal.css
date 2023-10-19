@@ -1,4 +1,4 @@
-.pdf-document {
+/* .pdf-document {
   max-width: 100%;
 }
 .react-pdf__Page__canvas {
@@ -6,4 +6,22 @@
 }
 .react-pdf__Page__textContent {
   display: none !important;
+} */
+.boleto-modal-content canvas{
+  width: 100% !important;
+  height: auto !important;
+  padding: 0 40px! important;
 }
+@media (max-width: 450px) {
+  .boleto-modal-content canvas{
+    padding: 0 120px! important;
+  }
+}
+
+@media (max-width: 374px) {
+  .boleto-modal-content canvas{
+    padding: 0 140px! important;
+  }
+}
+
+`;

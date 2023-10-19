@@ -13,9 +13,8 @@ const Menu = {
     menu: {
       border: 'none',
       outline: 'none',
-
+      fontSize: '0.75rem',
     },
-    breakpoints,
     item: {
       maxW: '8rem',
       borderRadius: 'none',
@@ -37,7 +36,8 @@ const Menu = {
       _after: {
         border: 'none',
         outline: 'none',
-      }
+      },
+
 
     },
     list: {
@@ -47,8 +47,7 @@ const Menu = {
       paddingY: '8px',
       position: 'absolute',
       inset: '0px auto auto 0px',
-      transform: 'translateX(-50%)',
-
+      transform: 'translateX(-5 0%)',
     }
   }
 }
@@ -57,6 +56,7 @@ const Menu = {
 export const theme = extendTheme({
   components: {
     Menu,
+    breakpoints
   },
   colors: {
     primary: "#369FFF",

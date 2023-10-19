@@ -49,6 +49,8 @@ function PDFViewer({ fileItem }: Props) {
       alignItems={'center'}
       justifyContent={'center'}
       borderRadius={'10px'}
+      width={'100%'}
+      height={'auto'}
     >
       <Document
         file={fileItem}

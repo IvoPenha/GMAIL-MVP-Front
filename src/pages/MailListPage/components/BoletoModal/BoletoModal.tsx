@@ -28,6 +28,7 @@ export const BoletoModalContent: React.FC<Props> = ({
   const { codigoBarras, dataVencimento, enviadoPor, valor } = boleto
 
   return <Box
+    className='boleto-modal-content'
     display={"flex"}
     flexDirection={"column"}
     gap={'5rem'}
@@ -36,7 +37,6 @@ export const BoletoModalContent: React.FC<Props> = ({
     <Box
       borderBottom={"1px solid "}
       borderColor={"neutral"}
-      paddingBottom={"5rem"}
     >
       <Box>
         <Flex flexDir={"column"} gap={0.5}>

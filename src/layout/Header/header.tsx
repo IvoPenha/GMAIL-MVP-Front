@@ -30,7 +30,7 @@ export function Header() {
     <>
       <Box bg={"primary"} px={{ md: "10rem", base: '1rem' }}>
         <Flex
-          h={16}
+          h={{ md: 16, base: 20 }}
           alignItems={"center"}
           justifyContent={"space-between"}
           zIndex={3}

@@ -2,26 +2,36 @@ import { useEffect, useState } from "react";
 import { Modal, CardListSkeleton, SkeletonEstatisticaCard, Situacao, MonthInput } from "../../shared/";
 import { Box, Flex, SkeletonText, Text } from "@chakra-ui/react";
 import { Boleto, CommonUsuarioClaims } from "../../types";
-import { getBoletos } from '../../services/';
+import { getBoletos, readAnexosFromGoogle } from '../../services/';
 // import { MonthInput } from '../components/monthInput';
-import { BoletoModalContent, BoletoCard, EstatisticaCard, CarouselContainer } from './components/';
+import { BoletoModalContent, BoletoCard, EstatisticaCard, CarouselContainer, StatusMenu } from './components/';
 import { useAuth } from '../../hooks';
-import { getFirstAndLastDayOfYearMonths } from '../../core';
+import { getDateToYYYYMM } from '../../core';
+import { useSearchParams } from 'react-router-dom';
+
+
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => setIsModalOpen(false);
-  const openModal = () => setIsModalOpen(true);
-  const [currenntFile, setCurrentFile] = useState<Blob | null>(null);
-  const [currentBoleto, setCurrentBoleto] = useState<Boleto | null>(null);
-  const [currentFileName, setCurrentFileName] = useState<string>("");
   const [isCurrentLoading, setIsCurrentLoading] = useState(true);
   const [boletos, setBoletos] = useState<Boleto[]>([]);
   const [currentAccount, setCurrentAccount] = useState<CommonUsuarioClaims | undefined>();
-  const [monthFilter, setMonthFilter] = useState(getFirstAndLastDayOfYearMonths(new Date().getMonth() + 1))
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currenntFile, setCurrentFile] = useState<Blob | null>(null);
+  const [currentBoleto, setCurrentBoleto] = useState<Boleto | null>(null);
+  const [currentFileName, setCurrentFileName] = useState<string>("");
+
+  const [monthFilter, setMonthFilter] = useState(getDateToYYYYMM(new Date()));
+  const [situacaoFilter, setSituacaoFilter] = useState<Situacao | null>(null)
+
+  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true);
 
   const { getCurrentAccount } = useAuth()
+
+  const filterParams = new URLSearchParams();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   async function updateBoleto(id: number, newValue: Situacao) {
     const newBoletos = [...boletos].map(item => {
@@ -47,16 +57,56 @@ function App() {
     setIsCurrentLoading(false);
   }
 
+
+  const buscarAnexosPorMes = async (month?: string) => {
+    if (!month) {
+      const anexos = await readAnexosFromGoogle(getDateToYYYYMM(new Date()));
+      console.log(anexos.response.length === 0)
+      if (anexos.response.length === 0)
+        return;
+      if (!currentAccount) return;
+      const boletos = await getBoletos(currentAccount.id)
+      setBoletos(boletos);
+      return;
+    };
+    const anexos = await readAnexosFromGoogle(month);
+    console.log(anexos.response.length === 0)
+    if (anexos.response.length === 0)
+      return;
+    if (!currentAccount) return;
+    const boletos = await getBoletos(currentAccount?.id!, searchParams)
+    setBoletos(boletos);
+  }
+
   useEffect(() => {
     initialGetBoletos();
+    buscarAnexosPorMes()
   }, []);
 
   useEffect(() => {
-    console.log('alterei month input');
+    if (situacaoFilter) {
+      filterParams.append('situacao', situacaoFilter);
+    }
 
-    console.log(monthFilter)
+    if (monthFilter) {
+      console.log(monthFilter)
+      filterParams.delete('month');
+      filterParams.append('month', monthFilter)
+      buscarAnexosPorMes(monthFilter);
+    }
 
-  }, [monthFilter])
+    setSearchParams(filterParams);
+  }, [situacaoFilter, monthFilter]);
+
+  useEffect(() => {
+    async function getBoletosWithParams() {
+      if (!currentAccount) return;
+      const boletos = await getBoletos(currentAccount.id, searchParams);
+      setBoletos(boletos);
+    }
+    getBoletosWithParams();
+
+  }, [searchParams]);
 
   const estatisticas = [
     { title: 'A pagar', value: 5 },
@@ -152,7 +202,20 @@ function App() {
             alignItems={'center'}
             justifyContent={'space-between'}
           >
-            Boletos
+            <Box
+              display={'flex'}
+              alignItems={'center'}
+              gap={2.5}
+              h={'full'}
+
+            >
+              Boletos
+              <StatusMenu
+                onValueChange={(value) => setSituacaoFilter(value)}
+                isFilter={true}
+                value={situacaoFilter}
+              />
+            </Box>
             <MonthInput
               onChange={
                 (value) => { setMonthFilter(value) }
@@ -196,7 +259,10 @@ function App() {
       >
         <Modal
           isOpen={isModalOpen}
-          OnClose={closeModal}
+          OnClose={() => {
+            setCurrentBoleto(null)
+            closeModal()
+          }}
         >
           {currentBoleto && <BoletoModalContent
             boleto={currentBoleto}

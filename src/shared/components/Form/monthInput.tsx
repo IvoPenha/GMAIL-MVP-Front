@@ -3,45 +3,46 @@ import React, {
 } from "react";
 import { Input } from "@chakra-ui/react";
 
-function getFirstAndLastDayOfYearMonths(
-  month: number
-): { firstDayOfPreviousMonth: string; lastDayOfNextMonth: string } | null {
-  // Validação do mês (deve estar entre 1 e 12)
-  if (month < 1 || month > 12) {
-    console.error("Mês inválido. Forneça um mês entre 1 e 12.");
-    return null;
-  }
+// function getFirstAndLastDayOfYearMonths(
+//   month: number
+// ): { dataInicio: string; dataFim: string } | null {
+//   // Validação do mês (deve estar entre 1 e 12)
+//   if (month < 0 || month > 12) {
+//     console.error("Mês inválido. Forneça um mês entre 1 e 12.");
+//     return null;
+//   }
 
-  // Obtém o ano atual
-  const currentYear = new Date().getFullYear();
+//   // Obtém o ano atual
+//   const currentYear = new Date().getFullYear();
 
-  // Calcula o primeiro dia do mês anterior
-  const firstDayOfPreviousMonth = new Date(
-    currentYear,
-    month - 1,
-    1
-  ).toLocaleDateString("pt-br");
+//   // Calcula o primeiro dia do mês anterior
+//   const dataInicio = new Date(
+//     currentYear,
+//     month - 1,
+//     1
+//   ).toLocaleDateString("en-Us");
 
-  // Calcula o último dia do mês seguinte
-  const lastDayOfNextMonth = new Date(currentYear, month, 0).toLocaleDateString(
-    "pt-br"
-  );
+//   // Calcula o último dia do mês seguinte
+//   const dataFim = new Date(currentYear, month, 0).toLocaleDateString(
+//     "en-Us"
+//   );
 
-  return {
-    firstDayOfPreviousMonth,
-    lastDayOfNextMonth,
-  };
-}
+//   return {
+//     dataInicio,
+//     dataFim,
+//   };
+// }
 function getDateToYYYYMM(date: Date) {
   return `${date.getFullYear()}-${date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth()}`
     }`;
 }
 
-function getMonthfromYYYYMMstring(dateValue: string) {
-  const date = new Date(dateValue);
-  console.log(date, date.getMonth())
-  return date.getMonth() + 2;
-}
+// function getMonthfromYYYYMMstring(dateValue: string) {
+//   const date = new Date(dateValue);
+//   console.log(date, date.getMonth())
+//   if (date.getMonth() === 11) return 1;
+//   return date.getMonth() + 2;
+// }
 
 
 export function MonthInput({ onChange }: { onChange: (value: any) => void }) {
@@ -53,11 +54,11 @@ export function MonthInput({ onChange }: { onChange: (value: any) => void }) {
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setSelectedMonth(event.target.value);
-    onChange(getFirstAndLastDayOfYearMonths(getMonthfromYYYYMMstring(event.target.value)))
+    onChange((event.target.value));
   };
   return (
     <>
-      <Input type="month" value={selectedMonth} onChange={handleMonthChange} width={'fit-content'} color={'primary'} />
+      <Input type="month" value={selectedMonth} onChange={handleMonthChange} width={'fit-content'} textOverflow={'ellipsis'} maxW={{ md: 'none', base: '11.5rem' }} color={'primary'} />
     </>
     // <h1>oi</h1>
   );

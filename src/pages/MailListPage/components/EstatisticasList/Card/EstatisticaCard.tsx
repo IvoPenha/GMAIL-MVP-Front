@@ -25,13 +25,13 @@ export const EstatisticaCard: React.FC<EstatisticaCardProps> = ({
         gap={'.75rem'}
         bg={'estatisticaCard'}
         fontFamily={'manrope'}
-        paddingX={{ lg: '25px', base: '14px' }}
+        paddingX={{ lg: '25px', sm: '14px', base: '9px' }}
         height={'120px'}
         borderRadius={'10px'}
         width={'100%'}
         maxWidth={{ lg: '20rem', base: 'none' }}
       >
-        <Box fontSize={{ sm: '1rem', base: '.7rem' }} fontWeight={500} color="subtitle">
+        <Box fontSize={{ sm: '1rem', base: '.8rem' }} fontWeight={500} color="subtitle">
           {title}
         </Box>
         <Box fontSize="4xl" display={'flex'}
