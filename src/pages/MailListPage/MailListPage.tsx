@@ -52,9 +52,9 @@ function App() {
   async function initialGetBoletos() {
     const account = await getCurrentAccount<CommonUsuarioClaims>()
     setCurrentAccount(account);
-    const boletos = await getBoletos(account?.id!, searchParams);
-    setBoletos(boletos);
-    setIsCurrentLoading(false);
+    // const boletos = await getBoletos(account?.id!, searchParams);
+    // setBoletos(boletos);
+    // setIsCurrentLoading(false);
   }
 
 
